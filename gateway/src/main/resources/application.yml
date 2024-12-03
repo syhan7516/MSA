@@ -1,0 +1,56 @@
+# port
+server:
+  port: 19091
+
+# 유레카 서버 설정
+eureka:
+  client:
+
+    # 기본 서비스 통신 URL 설정
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+
+spring:
+
+  # name
+  application:
+    name: gateway-service
+
+  # Spring 애플리케이션이 리액티브 웹 애플리케이션으로 설정
+  main:
+    web-application-type: reactive
+
+  cloud:
+    gateway:
+
+      # Spring Cloud Gateway의 라우팅 설정
+      routes:
+
+        # 라우트 식별자
+        # order-service 이름으로 로드 밸런싱된 서비스로 라우팅
+        # /orders/** 경로로 들어오는 요청을 이 라우트로 처리
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/orders/**
+
+        # 라우트 식별자
+        # product-service 이름으로 로드 밸런싱된 서비스로 라우팅
+        # /products/** 경로로 들어오는 요청을 이 라우트로 처리
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/products/**
+
+        # 라우트 식별자
+        # auth-service 이름으로 로드 밸런싱된 서비스로 라우팅
+        # /auth/** 경로로 들어오는 요청을 이 라우트로 처리
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+
+      # 서비스 디스커버리를 통해 동적으로 라우트를 생성하도록 설정
+      discovery:
+        locator:
+          enabled: true
