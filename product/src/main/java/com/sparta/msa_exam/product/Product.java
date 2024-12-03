@@ -3,11 +3,13 @@ package com.sparta.msa_exam.product;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "products")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Product {
 
     @Id
@@ -22,8 +24,7 @@ public class Product {
     private Integer supplyPrice;
 
     @Builder
-    public Product(Long productId, String productName, Integer supplyPrice) {
-        this.productId = productId;
+    public Product(String productName, Integer supplyPrice) {
         this.productName = productName;
         this.supplyPrice = supplyPrice;
     }
