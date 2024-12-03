@@ -4,10 +4,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,5 +25,13 @@ public class ProductController {
 
         httpServletResponse.addHeader("Server-Port",serverPort);
         return ResponseEntity.ok(productService.createProduct(productCreateReqDto));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<ProductGetResDto>> getAllProducts(
+            HttpServletResponse httpServletResponse) {
+
+        httpServletResponse.addHeader("Server-Port",serverPort);
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 }
